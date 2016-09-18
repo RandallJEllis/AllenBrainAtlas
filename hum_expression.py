@@ -2,6 +2,8 @@
 """
 Created on Wed Mar 23 16:11:01 2016
 @author: ellisrj2
+
+Using a list of genes of interest, find the expression values in various tissues usinng human brain gene expression data from the Allen Brain Atlas that can be downloaded at: http://human.brain-map.org/static/download
 """
 
 import pandas
@@ -19,7 +21,7 @@ flags5 = []
 #flags6 = []
 #flags7 = []
 
-gene_list = [gene.rstrip('\n') for gene in open('pfc_ctd_cocaine.txt')]
+gene_list = [gene.rstrip('\n') for gene in open('genes.txt')]
 gene_list = [gene.upper() for gene in gene_list]
 
 df = pandas.read_csv('Probes.csv', skipinitialspace=True, engine='python')
@@ -43,15 +45,9 @@ for i in range(len(probes)):
         for j in range(len(pfc_columns)):
             flags[i][j] = int(df_microarray[pfc_columns[j]][idx])
 
-#rows = zip(genes, probes, flags, flags2)
 
 path = os.getcwd()
 idx_of_last_letters = max(path.rfind(i) for i in "abcdefghijklmnopqrstuvwxyz")
 
-numpy.savetxt('pfc_ctd_expression' + '_' + path[idx_of_last_letters+1:] + '.csv', flags, delimiter=",")
+numpy.savetxt('pfc__expression' + '_' + path[idx_of_last_letters+1:] + '.csv', flags, delimiter=",")
 
-#with open('striatum_ctd_expression' + '_' + path[idx_of_last_letters+1:] + '.csv', 'wb') as thefile:
-#    writer = csv.writer(thefile)
-#    writer.writerow(['Gene', 'Probe', 'left', 'right'])
-#    for row in rows:
-#        writer.writerow(row)
